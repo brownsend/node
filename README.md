@@ -108,6 +108,13 @@ _**Description**_
 
 `-offPgDb` Specify the database name.
 
+`-mainNet` Set `true` if the server join the main network; otherwise, set `false`.
+
+`-domain` Use your server domain.
+
+`/p2pnode/run/dendrite-p2p` Specify the directory of the `peerID`.
+
+
 **Step 4. Web client applications related (optional)**
 
 To support web client applications, you need to specify the `-announce` and `-peer` with _WSS_ protocol address with a domain name.
