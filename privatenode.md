@@ -52,12 +52,16 @@ _**Description**_
 
 `-PrivateApiToken` your admin token, which will be used to Configure the DID-Whitelist of the PrivateNode. Detailed DID-Whitelist configuration can be found in step 5.
 
-**Step 4. Web client applications related (optional)**
+`-PrivateMode` Set `true` if the server private node; otherwise, set `false`.
 
-To support web client applications, you need to specify the `-announce` and `-peer` with _WSS_ protocol address with a domain name.
+`-PrivateMode` Set `true` if the server private node; otherwise, set `false`.
+
+`-ProfileStoreMode` Specify the port for receiving API requests. Set to -1 in most cases since the edge node is seldom used as a client.
+
+**Step 4. Install Nginx**
 
 1. Prepare a domain name.
-2.  Configure a proxy to verify the certificate, convert the _WSS_ protocol to _WS_ and forward it to the edge node listen port.
+2.  Configure a proxy to verify the certificate, convert the https protocol and forward it to the private server listen port.
 
     You can find more about _Nginx_ proxy configurations [here](https://phoenixnap.com/kb/how-to-install-nginx-on-ubuntu-20-04).
 
@@ -67,39 +71,58 @@ Below is a sample _Nginx_ configuration:
 
 ```nginx
 server {
-    server_name p2p-test.sending.network;
-     
-    listen 9010 ssl http2;
-    listen [::]:9010 ssl http2;
- 
-    access_log /var/log/nginx/p2p-test.sending.network_access.log;
-    error_log /var/log/nginx/p2p-test.sending.network_error.log;
- 
-    #listen [::]:443 ssl ipv6only=on; # managed by Certbot
-    #listen 443 ssl; # managed by Certbot
-    # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/p2p-test.sending.network/fullchain.pem;
-    # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/p2p-test.sending.network/privkey.pem;
-    # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
- 
-    # HSTS (ngx_http_headers_module is required) (63072000 seconds)
-    add_header Strict-Transport-Security "max-age=63072000" always;
- 
-    location /p2p/12D3KooWLPZrPkxSbnx6bcmkFyYTeJVApModhhu7b16YtPGXQAA5 {
-        proxy_pass http://127.0.0.1:9085;
-    proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-    proxy_set_header Host $host;
+    server_name fednode.sending.me;
+    listen 80;
+    listen [::]:80;
+
+    access_log /var/log/nginx/privatenode.sending.network_access.log;
+    error_log /var/log/nginx/privatenode.sending.network_error.log;
+
+    location / {
+       
+        proxy_pass http://127.0.0.1:8012;
+        proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header X-Forwarded-Proto $scheme;
+
+        client_max_body_size 50M;
+        #add_header Access-Control-Allow-Methods "OPTIONS, GET, POST, HEAD, PUT, DELETE";
+        #add_header Access-Control-Allow-Origin "*";
     }
- 
+
+}
+
+server {
+    server_name fednode.sending.me;
+    
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    access_log /var/log/nginx/privatenode.sending.network_access.log;
+    error_log /var/log/nginx/privatenode.sending.network_error.log;
+
+    #listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    #listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/privatenode.sending.network/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/privatenode.sending.network/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+      
+         
+        proxy_pass http://127.0.0.1:8012;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        client_max_body_size 200M;
+        #add_header Access-Control-Allow-Methods "OPTIONS, GET, POST, HEAD, PUT, DELETE";
+        #add_header Access-Control-Allow-Origin "*";
+    }
+         
 }
 ```
 **Step 5. Configure the DID Whitelist of the PrivateNode**
