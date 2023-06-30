@@ -67,39 +67,59 @@ Below is a sample _Nginx_ configuration:
 
 ```nginx
 server {
-    server_name p2p-test.sending.network;
-     
-    listen 9010 ssl http2;
-    listen [::]:9010 ssl http2;
- 
-    access_log /var/log/nginx/p2p-test.sending.network_access.log;
-    error_log /var/log/nginx/p2p-test.sending.network_error.log;
- 
-    #listen [::]:443 ssl ipv6only=on; # managed by Certbot
-    #listen 443 ssl; # managed by Certbot
-    # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/p2p-test.sending.network/fullchain.pem;
-    # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/p2p-test.sending.network/privkey.pem;
-    # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
- 
-    # HSTS (ngx_http_headers_module is required) (63072000 seconds)
-    add_header Strict-Transport-Security "max-age=63072000" always;
- 
-    location /p2p/12D3KooWLPZrPkxSbnx6bcmkFyYTeJVApModhhu7b16YtPGXQAA5 {
-        proxy_pass http://127.0.0.1:9085;
-    proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-    proxy_set_header Host $host;
+    server_name fednode.sending.me;
+    listen 80;
+    listen [::]:80;
+
+    access_log /var/log/nginx/fednode.sending.network_access.log;
+    error_log /var/log/nginx/fednode.sending.network_error.log;
+
+    location / {
+       
+         proxy_pass http://127.0.0.1:8012;
+        proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $remote_addr;
         proxy_set_header X-Forwarded-Proto $scheme;
+
+        client_max_body_size 50M;
+        #add_header Access-Control-Allow-Methods "OPTIONS, GET, POST, HEAD, PUT, DELETE";
+        #add_header Access-Control-Allow-Origin "*";
     }
- 
+
 }
+
+server {
+    server_name fednode.sending.me;
+    
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    access_log /var/log/nginx/fednode.sending.network_access.log;
+    error_log /var/log/nginx/fednode.sending.network_error.log;
+
+    #listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    #listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/fednode.sending.network/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/fednode.sending.network/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+      
+         
+        proxy_pass http://127.0.0.1:8012;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        client_max_body_size 200M;
+        #add_header Access-Control-Allow-Methods "OPTIONS, GET, POST, HEAD, PUT, DELETE";
+        #add_header Access-Control-Allow-Origin "*";
+    }
+         
+}
+
 ```
 
