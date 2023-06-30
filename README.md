@@ -112,6 +112,14 @@ _**Description**_
 
 `-domain` Use your server domain.
 
+`-wssport` Specify the WebSocket listen port if you want to use the _WSS_ protocol; otherwise, set it to -1. Make sure you set at least one of the `-listen` or `-listen`.
+
+`-internalPrometheusPort` Specify Prometheus listen port if you want to use Prometheus; otherwise, set it to -1.
+
+`-additionalPort0` Specify the WebSocket listen port if you want to use the _https_ protocol; otherwise, set it to -1. Make sure you set at least one of the `-listen` or `-listen`.
+
+`-additionalPort2` Specify the tcp listen port if you want to use the _https_ protocol; otherwise, set it to -1. Make sure you set at least one of the `-listen` or `-listen`.
+
 `/p2pnode/run/dendrite-p2p` Specify the directory of the `peerID`.
 
 
