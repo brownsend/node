@@ -118,7 +118,11 @@ _**Description**_
 
 `-additionalPort0` Specify the WebSocket listen port if you want to use the _https_ protocol; otherwise, set it to -1. Make sure you set at least one of the `-listen` or `-listen`.
 
-`-additionalPort2` Specify the tcp listen port if you want to use the _https_ protocol; otherwise, set it to -1. Make sure you set at least one of the `-listen` or `-listen`.
+`-additionalPort1` Specify the WebSocket listen port if you want to use the _WSS_ protocol; otherwise, set it to -1. Make sure you set at least one of the `-listen` or `-listen`.
+
+`-additionalPort2` Specify the Tcp listen port if you want to use the _https_ protocol; otherwise, set it to -1. Make sure you set at least one of the `-listen` or `-listen`.
+
+`-additionalPort3` Specify the WebSocket listen port if you want to use the _WS_ protocol; otherwise, set it to -1. Make sure you set at least one of the `-listen` or `-listen`.
 
 `/p2pnode/run/dendrite-p2p` Specify the directory of the `peerID`.
 
