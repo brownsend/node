@@ -52,12 +52,11 @@ _**Description**_
 
 `-FederationMode` Set `true` if the server is fed server; otherwise, set `false`.
 
-**Step 4. Web client applications related (optional)**
+**Step 4. Install Nginx**
 
-To support web client applications, you need to specify the `-announce` and `-peer` with _WSS_ protocol address with a domain name.
 
 1. Prepare a domain name.
-2.  Configure a proxy to verify the certificate, convert the _WSS_ protocol to _WS_ and forward it to the edge node listen port.
+2.  Configure a proxy to verify the certificate.
 
     You can find more about _Nginx_ proxy configurations [here](https://phoenixnap.com/kb/how-to-install-nginx-on-ubuntu-20-04).
 
