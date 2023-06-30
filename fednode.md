@@ -56,7 +56,7 @@ _**Description**_
 
 
 1. Prepare a domain name.
-2.  Configure a proxy to verify the certificate.
+2.  Configure a proxy to verify the certificate,convert the https protocol and forward it to the fed server listen port.
 
     You can find more about _Nginx_ proxy configurations [here](https://phoenixnap.com/kb/how-to-install-nginx-on-ubuntu-20-04).
 
