@@ -56,7 +56,8 @@ _**Description**_
 
 `-PrivateMode` Set `true` if the server private node; otherwise, set `false`.
 
-`-ProfileStoreMode` Specify the port for receiving API requests. Set to -1 in most cases since the edge node is seldom used as a client.
+`-ProfileStoreMode` Specify the profile store mode. There are three modes: `remoteserver`,`localserver`,`offstoreserver`.  `remoteserver` is centralized storage. `localserver`  is local database.
+   `offstoreserver` is decentralized storage.
 
 **Step 4. Install Nginx**
 
