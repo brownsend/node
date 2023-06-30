@@ -28,7 +28,7 @@ docker pull jack0818/privateserver:latest
 
 
 ```shell
-sudo docker run -d  -p 8012:8012 -p 8013:8013  -e port=8012  -e listenWs=8013 -e ipfs=false   -e public=true -e FederationMode=true -e peer=/ip4/54.251.110.107/tcp/8082/ws/p2p/12D3KooWESGJGtydLPQ9ki6ikchMDGBrCyGHSKjhTAqiWGRhjbzG,/ip4/44.195.250.124/tcp/8082/ws/p2p/12D3KooWAC2FgzLwi6b2zyRkE6aCPY7f6H2Cn5RLYbkDsLuTcp2d  -e mainNet=true -e domain=privatenode.sending.network -e wssport=443  -e PrivateMode=true -v /fed/run/dendrite-p2p:/fed/run/dendrite-p2p jack0818/privateserver:latest
+sudo docker run -d  -p 8012:8012 -p 8013:8013  -e port=8012  -e listenWs=8013 -e ipfs=false   -e public=true -e FederationMode=true -e peer=/ip4/54.251.110.107/tcp/8082/ws/p2p/12D3KooWESGJGtydLPQ9ki6ikchMDGBrCyGHSKjhTAqiWGRhjbzG,/ip4/44.195.250.124/tcp/8082/ws/p2p/12D3KooWAC2FgzLwi6b2zyRkE6aCPY7f6H2Cn5RLYbkDsLuTcp2d  -e mainNet=true -e domain=privatenode.sending.network -e wssport=443  -e PrivateMode=true -e PrivateApiToken="your-admin-token" -v /fed/run/dendrite-p2p:/fed/run/dendrite-p2p jack0818/privateserver:latest
 ```
 
 
@@ -50,7 +50,7 @@ _**Description**_
 
 `-domain` Use your server domain.
 
-
+`-PrivateApiToken` your admin token, which will be used to Configure the DID-Whitelist of the PrivateNode. Detailed DID-Whitelist configuration can be found in step 5.
 
 **Step 4. Web client applications related (optional)**
 
@@ -102,3 +102,32 @@ server {
  
 }
 ```
+**Step 5. Configure the DID Whitelist of the PrivateNode**
+
+  Only those DIDs in Whitelist can use the PrivateNode. Now we have not provided the Whitelist management page, only provided the following 3 network interfaces. Need to configure Whitelist each privateNode alone
+  
+1. Add a DID to the DID whiteList
+   
+    POST: https://{domain}/_api/client/did/whitelist?token="configured by admin"
+   
+    ```
+    {"did":"355D738C10381e723b89aDa9Fda4aE59a988566g"}
+    ```
+    
+3. Delete a DID from the DID whiteList
+   
+    DELETE: https://{domain}/_api/client/did/whitelist/{did}?token="configured by admin" 
+   
+4. Query the current PriveNode DID whiteList
+   
+    GET: https://{domain}/_api/client/did/whitelist?token="configured by admin"  
+    RSP:
+   
+        ```
+        {
+        "dids": [
+           "012621ef7d849cce12be0e59169779af86230290"
+           ]
+        }
+        ```
+      
