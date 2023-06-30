@@ -169,7 +169,7 @@ server {
     The output looks like:
 
     ```
-    Dec 08 03:05:09 ip-172-31-34-109 storenode[8932]: time="2022-12-08T03:05:09.053437868Z" level=info msg="Listening on 9d163f247d73d28c2dfaa0f2bce1a0e9e7785316c580f7a2279a1c244cb2b02a, peer id: 12D3KooWLPZrPkxSbnx6bcmkFyYTeJVApModhhu7b16YtPGXQAA5"
+    {"log":"time=\"2023-06-13T11:41:00.237779796Z\" level=info msg=\"offSrvInit storeMgr.GetCountCodeByAddrsByPeer country:US, localPeerId:12D3KooWBmx5of7TDHmLjc2eycuXKj9h9PuXuMUYKK6j7WTM7zck\"\n","stream":"stdout","time":"2023-06-13T11:41:00.244691536Z"}
     ```
 
-    In this case, `12D3KooWLPZrPkxSbnx6bcmkFyYTeJVApModhhu7b16YtPGXQAA5` is the `peerID`.
+    In this case, `12D3KooWBmx5of7TDHmLjc2eycuXKj9h9PuXuMUYKK6j7WTM7zck` is the `peerID`.
