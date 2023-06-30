@@ -28,7 +28,7 @@ docker pull jack0818/fedserver:latest
 
 
 ```shell
-sudo docker run -d -p 9082:9082 -p 9085:9085 -p 2112:2112 -p 12345:12345 -p 9702:9702 -e offPgHost=$offPgHost -e offPgUser=$user -e offPgPasswd=$offstore -e offPgDb=$dbname -e port=-1 -e listen=9082 -e listenWs=9085 -e ipfs=false -e offProKv=true -e public=true -e offMode=true -e offserver=true -e disableFileLog=true -e peer=/ip4/54.251.110.107/tcp/8082/ws/p2p/12D3KooWESGJGtydLPQ9ki6ikchMDGBrCyGHSKjhTAqiWGRhjbzG,/ip4/44.195.250.124/tcp/8082/ws/p2p/12D3KooWAC2FgzLwi6b2zyRkE6aCPY7f6H2Cn5RLYbkDsLuTcp2d -e disableMdns=true -e internalPrometheusPort=2112  -e additionalPort0=10002 -e additionalPort1=12345 -e additionalPort2=9703 -e additionalPort3=9702 -e mainNet=true -e domain=$yourdomain -e wssport=443 -v /p2pnode/run/dendrite-p2p:/p2pnode/run/dendrite-p2p -v /p2pnode/.offfiledir:/p2pnode/.offfiledir jack0818/network:latest
+sudo docker run -d  -p 8012:8012 -p 8013:8013  -e port=8012  -e listenWs=8013 -e ipfs=false   -e public=true -e FederationMode=true -e peer=/ip4/54.251.110.107/tcp/8082/ws/p2p/12D3KooWESGJGtydLPQ9ki6ikchMDGBrCyGHSKjhTAqiWGRhjbzG,/ip4/44.195.250.124/tcp/8082/ws/p2p/12D3KooWAC2FgzLwi6b2zyRkE6aCPY7f6H2Cn5RLYbkDsLuTcp2d  -e mainNet=true -e domain=privatenode.sending.network -e wssport=443 -v /fed/run/dendrite-p2p:/fed/run/dendrite-p2p jack0818/fedserver:latest
 ```
 
 
