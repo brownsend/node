@@ -50,7 +50,7 @@ _**Description**_
 
 `-domain` Use your server domain.
 
-
+`-FederationMode` Set `true` if the server is fed server; otherwise, set `false`.
 
 **Step 4. Web client applications related (optional)**
 
